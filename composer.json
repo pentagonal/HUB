@@ -1,0 +1,37 @@
+{
+    "name": "pentagonal/hub",
+    "description": "Hub Package API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ArrayIterator",
+            "email": "me@arrayiterator.com",
+            "role": "developer"
+        },
+        {
+            "name": "Pentagonal",
+            "email": "org@pentagonal.org",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "ext-json": "*",
+        "swaggest/json-schema": "^v0.12.42"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.10.3",
+        "slevomat/coding-standard": "^8.15.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Pentagonal\\Hub\\": "src/"
+        }
+    }
+}

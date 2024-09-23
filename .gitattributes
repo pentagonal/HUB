@@ -1,0 +1,7 @@
+*.md            export-ignore
+.gitignore      export-ignore
+.github         export-ignore
+.gitattributes  export-ignore
+bin             export-ignore
+phpcs.xml      export-ignore
+CNAME           export-ignore
