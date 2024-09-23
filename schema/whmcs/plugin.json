@@ -21,6 +21,11 @@
             "description": "The name of the plugin",
             "type": "string"
         },
+        "menu_name": {
+            "description": "The menu name of the theme",
+            "default": "",
+            "type": "string"
+        },
         "version": {
             "description": "The version of the plugin",
             "type": "string"

@@ -915,7 +915,8 @@
     "properties": {
         "$schema": {
             "description": "The schema uri of the theme",
-            "type": "string"
+            "type": "string",
+            "format": "uri-reference"
         },
         "$id": {
             "description": "The id of the theme schema",
