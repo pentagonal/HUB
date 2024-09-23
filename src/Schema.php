@@ -9,8 +9,7 @@ use Pentagonal\Hub\Interfaces\SchemaInterface;
 use Pentagonal\Hub\Interfaces\SchemaStructureInterface;
 use RuntimeException;
 use Swaggest\JsonSchema\Context;
-use Swaggest\JsonSchema\SchemaContract;
-use Swaggest\JsonSchema\Structure\ClassStructure;
+use Swaggest\JsonSchema\Structure\ClassStructureContract;
 use Swaggest\JsonSchema\Structure\ObjectItemContract;
 use Throwable;
 use function class_exists;
@@ -57,7 +56,8 @@ final class Schema implements SchemaInterface
     public const SCHEMA_NAMESPACE = __NAMESPACE__ . '\\Schema\\';
 
     /**
-     * @var array<string, SchemaContract>
+     * @var array<string, \Swaggest\JsonSchema\SchemaContract&ClassStructureContract>
+     * @noinspection PhpFullyQualifiedNameUsageInspection
      */
     private static array $refSchema = [];
 
@@ -118,7 +118,7 @@ final class Schema implements SchemaInterface
     /**
      * @inheritDoc
      */
-    public static function createSchemaReference(string $className): SchemaContract
+    public static function createSchemaReference(string $className)
     {
         $lowerClassName = strtolower(trim($className, '\\'));
         if (isset(self::$refSchema[$lowerClassName])) {
@@ -140,7 +140,7 @@ final class Schema implements SchemaInterface
     public static function createSchemaFromFile(string $file, string $className = Schema::class): ?ObjectItemContract
     {
         /** @noinspection PhpRedundantOptionalArgumentInspection */
-        if ($className === Schema::class || is_subclass_of($className, ClassStructure::class, true)) {
+        if ($className === Schema::class || is_subclass_of($className, ClassStructureContract::class, true)) {
             try {
                 return $className::import(self::readJsonSchemaFile($file));
             } catch (Throwable $e) {

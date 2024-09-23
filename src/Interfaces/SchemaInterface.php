@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Pentagonal\Hub\Interfaces;
 
 use Pentagonal\Hub\Schema;
-use Swaggest\JsonSchema\SchemaContract;
 use Swaggest\JsonSchema\Structure\ObjectItemContract;
 
 /**
@@ -74,7 +73,8 @@ interface SchemaInterface
      * Create schema reference
      *
      * @param string $className
-     * @return SchemaContract
+     * @return \Swaggest\JsonSchema\SchemaContract&\Swaggest\JsonSchema\Structure\ClassStructureContract
+     * @noinspection PhpFullyQualifiedNameUsageInspection
      */
-    public static function createSchemaReference(string $className): SchemaContract;
+    public static function createSchemaReference(string $className);
 }
