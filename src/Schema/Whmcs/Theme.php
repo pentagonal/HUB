@@ -132,7 +132,6 @@ class Theme extends AbstractSchemaStructure
             ->setTitle('Schema theme for whmcs')
             ->setDescription('This schema to implement theme for whmcs pentagonal addon')
             ->setType(JsonSchema::OBJECT)
-            ->setAdditionalProperties(false)
             ->setDefinitions(Definition::schema())
             ->setRequired([
                 'name'
