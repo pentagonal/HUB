@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="nojs">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noydir">
+    <title>Schema List</title>
+    <style>
+    /*# sourceURL=style.css */
+body:not(:has(input[type="radio"]:checked)) nav label:first-child,
+:has(input[id=schema-1-radio]:checked) label[for=schema-1-radio],
+:has(input[id=schema-2-radio]:checked) label[for=schema-2-radio] {
+    background: rgba(0,0,0,.1);
+}
+:root {
+    --tab-list-height: 200px;
+}
+html {
+    font-family: -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
+        Liberation Sans, sans-serif, Apple Color Emoji,
+        Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    line-height: 1.5;
+    color: #333;
+    font-size: 16px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+*,*:before,*:after {
+    box-sizing: border-box;
+}
+
+p {
+    margin: 0 0 .5rem;
+}
+h1, h2 {
+    margin: 0 0 .3rem;
+}
+h1 {
+    font-size: 2rem;
+    padding: .5rem;
+}
+h2 {
+    font-size:1.2rem;
+}
+body {
+    background: #f1f1f1;
+}
+.page {
+    display: flex;
+    flex-direction: row;
+}
+.page {
+    min-height: 100vh;
+    position:relative;
+    height: 100%;
+}
+.left-menu {
+    z-index:99;
+    flex: 0 0 300px;
+    position: relative;
+    top:0;
+    left:0;
+    background: #227480;
+    color: #fff;
+    margin-left:0;
+    transition: margin-left ease .3s;
+    height: 100vh;
+    overflow-x: inherit;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+.top-left-menu {
+    display: flex;
+    height: 3rem;
+    background-color: #1b4d55;
+    color: #ffffff;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: sticky;
+    top:0;
+}
+.top-left-menu h1 {
+    font-size: 1.1rem;
+    font-weight: lighter;
+    margin:0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.schema-list {
+    z-index:88;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 100%;
+    height: 100vh;
+    overflow: auto;
+    padding: 0;
+}
+.left-menu label {
+    display: block;
+    padding: .8rem .4rem;
+    text-decoration:none;
+    cursor: pointer;
+}
+input[type="radio"],
+input[type="checkbox"],
+.schema-list .tab-wrapper {
+    display:none;
+}
+.schema-list .tab-wrapper:has(input[type="radio"]:checked),
+.schema-list:not(:has(input[type="radio"]:checked)) .tab-wrapper:first-child {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 100%;
+}
+.tab-list {
+    padding: 1rem;
+}
+.nav-header {
+    position: sticky;
+    top: 0;
+    background-color:#227480;
+    display: flex;
+    align-items: center;
+}
+.nav-header label {
+    cursor: pointer;
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    margin: .5rem 1rem;
+    font-size:0;
+    outline:0;
+    position: relative;
+    background: transparent;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.nav-header label::after,
+.nav-header label::before {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 2rem;
+    background: #fff;
+    position: relative;
+    transform: rotate(45deg);
+    top: .85rem;
+    transition: all ease .3s;
+}
+.nav-header label::after {
+    transform: rotate(-45deg);
+    top:.6rem;
+}
+.left-menu:has(:checked) {
+    margin-left:-300px;
+}
+@media (max-width: 640px) {
+    .tab-list {
+        transition: all ease .3s;
+        margin-left:0;
+    }
+    body:not(:has(.left-menu :checked)) .tab-list {
+        margin-left: -300px;
+    }
+}
+:has(.left-menu :checked) .nav-header label::after,
+:has(.left-menu :checked) .nav-header label::before {
+    transform: rotate(0);
+    top: 20%;
+}
+:has(.left-menu :checked) .nav-header label::after {
+    top: 50%;
+}
+.nojs .preview-schema {
+    display:none;
+}
+.preview-schema {
+    margin-left: 1rem;
+}
+table {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0;
+    border-collapse: collapse;
+    font-size: .9rem;
+    border-top: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+tr td {
+    padding: .4rem;
+}
+tr td:first-child {
+    font-weight: bold;
+    padding-left:0;
+    width: 100px;
+}
+.button {
+    text-decoration:none;
+    color: #444;
+    font-size: .8rem;
+    padding: .4rem .6rem;
+    border: 2px solid #444;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: .25rem;
+    transition: all ease .1s;
+    cursor: pointer;
+    user-select: none;
+}
+.button:hover,
+.button:focus {
+    border-color: #1b4d55;
+    color: #1b4d55;
+}
+pre.json-schema {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: .25rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    font-size: .8rem;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    min-height: 300px;
+    height: calc(100vh - var(--tab-list-height) - 7.5rem);
+    /* monokai background */
+    background: #272822;
+    color: #f8f8f2;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    border: 1px solid #333;
+}
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="left-menu">
+        <div class="top-left-menu">
+            <h1>Schema List</h1>
+        </div>
+        <input type="checkbox" id="sidebar-checkbox">
+        <nav>
+            
+        <label for="schema-1-radio">Schema theme for whmcs</label>
+        <label for="schema-2-radio">Schema plugin for whmcs</label>
+        </nav>
+    </div>
+    <div class="schema-list">
+        <div class="nav-header">
+            <label for="sidebar-checkbox">Menu</label>
+        </div>
+        <div class="tab-list">
+                    <div class="tab-wrapper">
+            <div class="tab-content">
+                <input type="radio" name="tab" id="schema-1-radio">
+                <h2>Schema theme for whmcs</h2>
+                <table>
+                    <tr>
+                        <td>Version</td>
+                        <td>1.0.0</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>This schema to implement theme for whmcs pentagonal addon</td>   
+                    </tr>
+                    <tr>
+                        <td>Filename</td>
+                        <td>schema/whmcs/theme.json</td>
+                    </tr>    
+                </table>
+                <p>
+                    <a href="schema/whmcs/theme.json" target="_blank" class="button">View Schema</a>
+                    <span class="preview-schema button" data-json="{&quot;$schema&quot;:&quot;http://json-schema.org/draft-07/schema&quot;,&quot;title&quot;:&quot;Schema theme for whmcs&quot;,&quot;description&quot;:&quot;This schema to implement theme for whmcs pentagonal addon&quot;,&quot;required&quot;:[&quot;name&quot;],&quot;additionalProperties&quot;:false,&quot;definitions&quot;:{&quot;title&quot;:{&quot;description&quot;:&quot;The title of the definition&quot;,&quot;required&quot;:[&quot;title&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the title&quot;,&quot;default&quot;:&quot;title&quot;,&quot;enum&quot;:[&quot;title&quot;],&quot;type&quot;:&quot;string&quot;},&quot;title&quot;:{&quot;description&quot;:&quot;The title of the definition&quot;,&quot;type&quot;:&quot;string&quot;},&quot;tag&quot;:{&quot;description&quot;:&quot;The tag of the title&quot;,&quot;default&quot;:&quot;h2&quot;,&quot;enum&quot;:[&quot;h1&quot;,&quot;h2&quot;,&quot;h3&quot;,&quot;h4&quot;,&quot;h5&quot;,&quot;h6&quot;,&quot;div&quot;],&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;string&quot;},&quot;settings&quot;:{&quot;description&quot;:&quot;The settings of the definition&quot;,&quot;type&quot;:[&quot;object&quot;,&quot;array&quot;],&quot;oneOf&quot;:[{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/checkBox&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/radio&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/toggle&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/html&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/group&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/title&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/spacer&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/text&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/hidden&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/textarea&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/select&quot;},{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/input&quot;}]},&quot;htmlTagAttributes&quot;:{&quot;description&quot;:&quot;The html tag attributes of the definition&quot;,&quot;additionalProperties&quot;:false,&quot;properties&quot;:{&quot;data&quot;:{&quot;description&quot;:&quot;The data-* attributes of the tag&quot;,&quot;minProperties&quot;:1,&quot;additionalProperties&quot;:false,&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;number&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;},&quot;aria&quot;:{&quot;description&quot;:&quot;The aria-* attributes of the tag&quot;,&quot;minProperties&quot;:1,&quot;additionalProperties&quot;:false,&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;number&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;},&quot;class&quot;:{&quot;description&quot;:&quot;The class attribute of the tag&quot;,&quot;type&quot;:&quot;object&quot;,&quot;oneOf&quot;:[{&quot;description&quot;:&quot;The class attribute of the tag&quot;,&quot;pattern&quot;:&quot;^([a-z0-9:-]+)$&quot;,&quot;type&quot;:&quot;string&quot;},{&quot;items&quot;:{&quot;description&quot;:&quot;The class list attribute of the tag&quot;,&quot;pattern&quot;:&quot;^([a-z0-9:-]+)$&quot;,&quot;minItems&quot;:1,&quot;type&quot;:&quot;string&quot;},&quot;type&quot;:&quot;array&quot;}]}},&quot;type&quot;:&quot;object&quot;},&quot;checkBox&quot;:{&quot;description&quot;:&quot;The input checkbox attributes of the definition&quot;,&quot;required&quot;:[&quot;name&quot;,&quot;label&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the checkbox&quot;,&quot;default&quot;:&quot;checkbox&quot;,&quot;enum&quot;:[&quot;checkbox&quot;],&quot;type&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the checkbox&quot;,&quot;type&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;description&quot;:&quot;The label of the checkbox&quot;,&quot;type&quot;:&quot;string&quot;},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the checkbox&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;description&quot;:&quot;The value of the checkbox&quot;,&quot;default&quot;:&quot;1&quot;,&quot;type&quot;:&quot;string&quot;},&quot;multiple&quot;:{&quot;description&quot;:&quot;The multiple attribute of the checkbox&quot;,&quot;type&quot;:&quot;boolean&quot;},&quot;required&quot;:{&quot;description&quot;:&quot;The required attribute of the checkbox&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;checked&quot;:{&quot;description&quot;:&quot;The checked attribute of the checkbox&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;attributes&quot;:{&quot;description&quot;:&quot;The attributes&quot;,&quot;default&quot;:{},&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;integer&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;toggle&quot;:{&quot;description&quot;:&quot;The toggle checkbox attributes of the definition&quot;,&quot;required&quot;:[&quot;name&quot;,&quot;label&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the toggle&quot;,&quot;default&quot;:&quot;toggle&quot;,&quot;enum&quot;:[&quot;toggle&quot;],&quot;type&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the toggle&quot;,&quot;type&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;description&quot;:&quot;The label of the toggle&quot;,&quot;type&quot;:&quot;string&quot;},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the toggle&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;description&quot;:&quot;The value of the toggle&quot;,&quot;default&quot;:&quot;1&quot;,&quot;enum&quot;:[&quot;1&quot;,&quot;0&quot;],&quot;type&quot;:&quot;string&quot;},&quot;multiple&quot;:{&quot;description&quot;:&quot;The multiple attribute of the toggle&quot;,&quot;default&quot;:false,&quot;enum&quot;:[false],&quot;type&quot;:&quot;boolean&quot;},&quot;required&quot;:{&quot;description&quot;:&quot;The required attribute of the toggle&quot;,&quot;default&quot;:false,&quot;enum&quot;:[false],&quot;type&quot;:&quot;boolean&quot;},&quot;checked&quot;:{&quot;description&quot;:&quot;The checked attribute of the toggle&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;attributes&quot;:{&quot;description&quot;:&quot;The attributes&quot;,&quot;default&quot;:{},&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;integer&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;radio&quot;:{&quot;description&quot;:&quot;The input attributes of the definition&quot;,&quot;required&quot;:[&quot;name&quot;,&quot;label&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the radio&quot;,&quot;default&quot;:&quot;radio&quot;,&quot;enum&quot;:[&quot;radio&quot;],&quot;type&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the radio&quot;,&quot;type&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;description&quot;:&quot;The label of the radio&quot;,&quot;type&quot;:&quot;string&quot;},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the radio&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;description&quot;:&quot;The value of the radio&quot;,&quot;default&quot;:&quot;1&quot;,&quot;type&quot;:&quot;string&quot;},&quot;multiple&quot;:{&quot;description&quot;:&quot;The multiple attribute of the radio&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;required&quot;:{&quot;description&quot;:&quot;The required attribute of the radio&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;checked&quot;:{&quot;description&quot;:&quot;The checked attribute of the radio&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;attributes&quot;:{&quot;description&quot;:&quot;The attributes&quot;,&quot;default&quot;:{},&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;integer&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;html&quot;:{&quot;description&quot;:&quot;The html attributes of the definition&quot;,&quot;required&quot;:[&quot;html&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the html&quot;,&quot;default&quot;:&quot;html&quot;,&quot;enum&quot;:[&quot;html&quot;],&quot;type&quot;:&quot;string&quot;},&quot;html&quot;:{&quot;description&quot;:&quot;The html of the definition&quot;,&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;group&quot;:{&quot;description&quot;:&quot;The group attributes of the definition&quot;,&quot;required&quot;:[&quot;group&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the group&quot;,&quot;default&quot;:&quot;group&quot;,&quot;enum&quot;:[&quot;group&quot;],&quot;type&quot;:&quot;string&quot;},&quot;group&quot;:{&quot;description&quot;:&quot;The group of the definition&quot;,&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/settings&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;spacer&quot;:{&quot;description&quot;:&quot;The spacer attributes of the definition&quot;,&quot;required&quot;:[&quot;type&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the spacer&quot;,&quot;default&quot;:&quot;spacer&quot;,&quot;enum&quot;:[&quot;spacer&quot;],&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;textarea&quot;:{&quot;description&quot;:&quot;The textarea attributes of the definition&quot;,&quot;required&quot;:[&quot;name&quot;,&quot;label&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the textarea&quot;,&quot;default&quot;:&quot;textarea&quot;,&quot;enum&quot;:[&quot;textarea&quot;],&quot;type&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the textarea&quot;,&quot;type&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;description&quot;:&quot;The label of the textarea&quot;,&quot;type&quot;:&quot;string&quot;},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the textarea&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;default&quot;:{&quot;description&quot;:&quot;The default value of the textarea&quot;,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]},&quot;placeholder&quot;:{&quot;description&quot;:&quot;The placeholder of the textarea&quot;,&quot;default&quot;:null,&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;description&quot;:&quot;The value of the textarea&quot;,&quot;type&quot;:&quot;string&quot;},&quot;required&quot;:{&quot;description&quot;:&quot;The required attribute of the textarea&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;description&quot;:&quot;The disabled attribute of the textarea&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;readonly&quot;:{&quot;description&quot;:&quot;The readonly attribute of the textarea&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;rows&quot;:{&quot;description&quot;:&quot;The rows of the textarea&quot;,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;cols&quot;:{&quot;description&quot;:&quot;The cols of the textarea&quot;,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;maxlength&quot;:{&quot;description&quot;:&quot;The maxlength attribute of the textarea&quot;,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;minlength&quot;:{&quot;description&quot;:&quot;The minlength attribute of the textarea&quot;,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;attributes&quot;:{&quot;description&quot;:&quot;The attributes&quot;,&quot;default&quot;:{},&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;integer&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;text&quot;:{&quot;description&quot;:&quot;The text of the definition&quot;,&quot;required&quot;:[&quot;text&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the text&quot;,&quot;default&quot;:&quot;text&quot;,&quot;enum&quot;:[&quot;text&quot;],&quot;type&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;description&quot;:&quot;The text of the definition&quot;,&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;string&quot;},&quot;hidden&quot;:{&quot;description&quot;:&quot;The hidden input of the definition&quot;,&quot;required&quot;:[&quot;value&quot;],&quot;additionalProperties&quot;:false,&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the hidden input&quot;,&quot;default&quot;:&quot;hidden&quot;,&quot;enum&quot;:[&quot;hidden&quot;],&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;description&quot;:&quot;The value of the hidden input&quot;,&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;string&quot;},&quot;select&quot;:{&quot;description&quot;:&quot;The select attributes of the definition&quot;,&quot;required&quot;:[&quot;name&quot;,&quot;label&quot;,&quot;options&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the select&quot;,&quot;default&quot;:&quot;select&quot;,&quot;enum&quot;:[&quot;select&quot;],&quot;type&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the select&quot;,&quot;type&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;description&quot;:&quot;The label of the select&quot;,&quot;type&quot;:&quot;string&quot;},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the select&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;placeholder&quot;:{&quot;description&quot;:&quot;The placeholder of the select&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]},&quot;multiple&quot;:{&quot;description&quot;:&quot;The multiple attribute of the select&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;required&quot;:{&quot;description&quot;:&quot;The required attribute of the select&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;options&quot;:{&quot;type&quot;:&quot;array&quot;,&quot;oneOf&quot;:[{&quot;description&quot;:&quot;The options of the select&quot;,&quot;items&quot;:{&quot;required&quot;:[&quot;label&quot;,&quot;value&quot;],&quot;additionalProperties&quot;:false,&quot;properties&quot;:{&quot;label&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;disabled&quot;:{&quot;type&quot;:&quot;boolean&quot;},&quot;selected&quot;:{&quot;type&quot;:&quot;boolean&quot;}},&quot;type&quot;:&quot;array&quot;},&quot;required&quot;:[&quot;label&quot;,&quot;value&quot;],&quot;type&quot;:&quot;object&quot;},{&quot;description&quot;:&quot;The optgroup of the select&quot;,&quot;required&quot;:[&quot;label&quot;,&quot;type&quot;,&quot;options&quot;],&quot;additionalProperties&quot;:false,&quot;properties&quot;:{&quot;label&quot;:{&quot;description&quot;:&quot;Label of optgroup&quot;,&quot;type&quot;:&quot;string&quot;},&quot;type&quot;:{&quot;default&quot;:&quot;optgroup&quot;,&quot;type&quot;:&quot;string&quot;},&quot;options&quot;:{&quot;$ref&quot;:&quot;#/definitions/select/properties/options&quot;}},&quot;type&quot;:&quot;object&quot;}]},&quot;attributes&quot;:{&quot;description&quot;:&quot;The attributes&quot;,&quot;default&quot;:{},&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;integer&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;input&quot;:{&quot;description&quot;:&quot;The input attributes of the definition&quot;,&quot;required&quot;:[&quot;name&quot;],&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;},&quot;properties&quot;:{&quot;type&quot;:{&quot;description&quot;:&quot;The type of the input&quot;,&quot;default&quot;:&quot;input&quot;,&quot;enum&quot;:[&quot;input&quot;],&quot;type&quot;:&quot;string&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the input&quot;,&quot;type&quot;:&quot;string&quot;},&quot;input&quot;:{&quot;description&quot;:&quot;The input type of the input&quot;,&quot;default&quot;:&quot;text&quot;,&quot;enum&quot;:[&quot;text&quot;,&quot;password&quot;,&quot;email&quot;,&quot;number&quot;,&quot;tel&quot;,&quot;url&quot;,&quot;search&quot;,&quot;date&quot;,&quot;time&quot;,&quot;datetime-local&quot;,&quot;month&quot;,&quot;week&quot;,&quot;color&quot;,&quot;file&quot;,&quot;hidden&quot;,&quot;image&quot;,&quot;range&quot;,&quot;reset&quot;,&quot;submit&quot;],&quot;type&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;description&quot;:&quot;The label of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the input&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;value&quot;:{&quot;description&quot;:&quot;The value of the input&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;placeholder&quot;:{&quot;description&quot;:&quot;The placeholder of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;string&quot;,&quot;null&quot;]},&quot;required&quot;:{&quot;description&quot;:&quot;The required attribute of the input&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;description&quot;:&quot;The disabled attribute of the input&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;readonly&quot;:{&quot;description&quot;:&quot;The readonly attribute of the input&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;multiple&quot;:{&quot;description&quot;:&quot;The multiple attribute of the input&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;pattern&quot;:{&quot;description&quot;:&quot;The pattern attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;regex&quot;},&quot;default&quot;:{&quot;description&quot;:&quot;The default value of the input&quot;,&quot;default&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;},&quot;minlength&quot;:{&quot;description&quot;:&quot;The minlength attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;maxlength&quot;:{&quot;description&quot;:&quot;The maxlength attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;min&quot;:{&quot;description&quot;:&quot;The min attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;max&quot;:{&quot;description&quot;:&quot;The max attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;step&quot;:{&quot;description&quot;:&quot;The step attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;size&quot;:{&quot;description&quot;:&quot;The size attribute of the input&quot;,&quot;default&quot;:null,&quot;type&quot;:[&quot;integer&quot;,&quot;null&quot;]},&quot;attributes&quot;:{&quot;description&quot;:&quot;The attributes&quot;,&quot;default&quot;:{},&quot;patternProperties&quot;:{&quot;^([a-z]+([a-z0-9-]*[a-z]+)?)$&quot;:{&quot;type&quot;:[&quot;string&quot;,&quot;integer&quot;,&quot;boolean&quot;,&quot;null&quot;]}},&quot;type&quot;:&quot;object&quot;,&quot;not&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/htmlTagAttributes&quot;}}},&quot;type&quot;:&quot;object&quot;}},&quot;properties&quot;:{&quot;$schema&quot;:{&quot;description&quot;:&quot;The schema uri of the theme&quot;,&quot;type&quot;:&quot;string&quot;},&quot;$id&quot;:{&quot;description&quot;:&quot;The id of the theme schema&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the theme&quot;,&quot;type&quot;:&quot;string&quot;},&quot;version&quot;:{&quot;description&quot;:&quot;The version of the theme&quot;,&quot;type&quot;:&quot;string&quot;},&quot;url&quot;:{&quot;description&quot;:&quot;The url of the theme&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;author&quot;:{&quot;description&quot;:&quot;The author of the theme&quot;,&quot;type&quot;:&quot;string&quot;},&quot;author_url&quot;:{&quot;description&quot;:&quot;The author url of the theme&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;license&quot;:{&quot;description&quot;:&quot;The license of the theme&quot;,&quot;type&quot;:&quot;string&quot;},&quot;license_url&quot;:{&quot;description&quot;:&quot;The license url of the theme&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;date&quot;:{&quot;description&quot;:&quot;The date of created of the theme&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;date-time&quot;},&quot;updated&quot;:{&quot;description&quot;:&quot;The date of updated of the theme&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;date-time&quot;},&quot;description&quot;:{&quot;description&quot;:&quot;The description of the theme&quot;,&quot;type&quot;:&quot;string&quot;},&quot;language_directory&quot;:{&quot;description&quot;:&quot;The language directory of the theme&quot;,&quot;default&quot;:&quot;languages&quot;,&quot;type&quot;:&quot;string&quot;},&quot;hooks&quot;:{&quot;description&quot;:&quot;Enable or disable hook&quot;,&quot;default&quot;:true,&quot;type&quot;:&quot;boolean&quot;},&quot;services&quot;:{&quot;description&quot;:&quot;Enable or disable services&quot;,&quot;default&quot;:true,&quot;type&quot;:&quot;boolean&quot;},&quot;translate&quot;:{&quot;description&quot;:&quot;The translatable or not of the theme&quot;,&quot;default&quot;:true,&quot;type&quot;:&quot;boolean&quot;},&quot;changelog&quot;:{&quot;description&quot;:&quot;The changelog of the theme&quot;,&quot;default&quot;:[],&quot;items&quot;:{&quot;additionalProperties&quot;:true,&quot;properties&quot;:{&quot;version&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;date&quot;:{&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;date-time&quot;},&quot;description&quot;:{&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;object&quot;},&quot;type&quot;:&quot;array&quot;},&quot;metadata&quot;:{&quot;description&quot;:&quot;The metadata of the theme&quot;,&quot;default&quot;:{},&quot;additionalProperties&quot;:true,&quot;type&quot;:&quot;object&quot;},&quot;settings&quot;:{&quot;description&quot;:&quot;The settings for the theme&quot;,&quot;items&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/settings&quot;},&quot;additionalProperties&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;$ref&quot;:&quot;#/definitions/settings&quot;},&quot;type&quot;:[&quot;object&quot;,&quot;array&quot;]}},&quot;type&quot;:&quot;object&quot;,&quot;$id&quot;:&quot;https://hub.pentagonal.org/schema/whmcs/theme.json&quot;,&quot;version&quot;:&quot;1.0.0&quot;}">View Schema</span>
+                </p>
+            </div>
+        </div>        <div class="tab-wrapper">
+            <div class="tab-content">
+                <input type="radio" name="tab" id="schema-2-radio">
+                <h2>Schema plugin for whmcs</h2>
+                <table>
+                    <tr>
+                        <td>Version</td>
+                        <td>1.0.0</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>This schema to implement plugin for whmcs pentagonal addon</td>   
+                    </tr>
+                    <tr>
+                        <td>Filename</td>
+                        <td>schema/whmcs/plugin.json</td>
+                    </tr>    
+                </table>
+                <p>
+                    <a href="schema/whmcs/plugin.json" target="_blank" class="button">View Schema</a>
+                    <span class="preview-schema button" data-json="{&quot;$schema&quot;:&quot;http://json-schema.org/draft-07/schema&quot;,&quot;title&quot;:&quot;Schema plugin for whmcs&quot;,&quot;description&quot;:&quot;This schema to implement plugin for whmcs pentagonal addon&quot;,&quot;required&quot;:[&quot;name&quot;,&quot;namespace&quot;],&quot;properties&quot;:{&quot;$schema&quot;:{&quot;description&quot;:&quot;The schema uri of the plugin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;$id&quot;:{&quot;description&quot;:&quot;The id of the plugin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;name&quot;:{&quot;description&quot;:&quot;The name of the plugin&quot;,&quot;type&quot;:&quot;string&quot;},&quot;version&quot;:{&quot;description&quot;:&quot;The version of the plugin&quot;,&quot;type&quot;:&quot;string&quot;},&quot;url&quot;:{&quot;description&quot;:&quot;The url of the plugin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;author&quot;:{&quot;description&quot;:&quot;The author of the plugin&quot;,&quot;type&quot;:&quot;string&quot;},&quot;author_url&quot;:{&quot;description&quot;:&quot;The author url of the plugin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;license&quot;:{&quot;description&quot;:&quot;The license of the plugin&quot;,&quot;type&quot;:&quot;string&quot;},&quot;license_url&quot;:{&quot;description&quot;:&quot;The license url of the plugin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;uri-reference&quot;},&quot;enable_admin_page&quot;:{&quot;description&quot;:&quot;Enable Page on addon plugin&quot;,&quot;default&quot;:false,&quot;type&quot;:&quot;boolean&quot;},&quot;namespace&quot;:{&quot;description&quot;:&quot;The namespace of the plugin class&quot;,&quot;pattern&quot;:&quot;^[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*([\\\\/][a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)*$&quot;,&quot;type&quot;:&quot;string&quot;}},&quot;type&quot;:&quot;object&quot;,&quot;$id&quot;:&quot;https://hub.pentagonal.org/schema/whmcs/plugin.json&quot;,&quot;version&quot;:&quot;1.0.0&quot;}">View Schema</span>
+                </p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (w, d) {
+        d.documentElement.classList.remove('nojs');
+        if (w.innerWidth < 900) {
+            d.getElementById('sidebar-checkbox').checked = true;
+        }
+        d.querySelectorAll('[data-json')
+            .forEach(function (el) {
+                let json = JSON.parse(el.getAttribute('data-json'));
+                el.removeAttribute('data-json');
+                let pre = d.createElement('pre');
+                pre.textContent = JSON.stringify(json, null, 2);
+                pre.style.display = 'none';
+                pre.classList.add('json-schema');
+                json = null;
+                const tabContent = el.closest('.tab-content');
+                const tabWrapper = el.closest('.tab-wrapper');
+                const height = function () {
+                    let computed = w.getComputedStyle(tabContent);
+                    let tabContentHeight = parseInt(computed.height, 10);
+                        tabContentHeight+= parseInt(computed.paddingTop, 10);
+                        tabContentHeight+= parseInt(computed.paddingBottom, 10);
+                        tabContentHeight+= parseInt(computed.marginTop, 10);
+                        tabContentHeight+= parseInt(computed.marginBottom, 10);
+                    tabWrapper.style.setProperty('--tab-list-height', tabContentHeight + 'px');
+                };
+                tabWrapper.appendChild(pre);
+                window.addEventListener('resize', height);
+                el.addEventListener('click', function () {
+                    if (el.classList.contains('active')) {
+                        el.classList.remove('active');
+                        el.innerHTML = 'View Schema';
+                        pre.style.display = 'none';
+                    } else {
+                        el.classList.add('active');
+                        pre.style.display = 'block';
+                        el.innerHTML = 'Hide Schema';
+                        height();
+                    }
+                });
+            });
+    })(window, document);
+</script>
+</body>
+</html>

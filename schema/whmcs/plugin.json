@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Schema plugin for whmcs",
+    "description": "This schema to implement plugin for whmcs pentagonal addon",
+    "required": [
+        "name",
+        "namespace"
+    ],
+    "properties": {
+        "$schema": {
+            "description": "The schema uri of the plugin",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "$id": {
+            "description": "The id of the plugin",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "name": {
+            "description": "The name of the plugin",
+            "type": "string"
+        },
+        "version": {
+            "description": "The version of the plugin",
+            "type": "string"
+        },
+        "url": {
+            "description": "The url of the plugin",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "author": {
+            "description": "The author of the plugin",
+            "type": "string"
+        },
+        "author_url": {
+            "description": "The author url of the plugin",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "license": {
+            "description": "The license of the plugin",
+            "type": "string"
+        },
+        "license_url": {
+            "description": "The license url of the plugin",
+            "type": "string",
+            "format": "uri-reference"
+        },
+        "enable_admin_page": {
+            "description": "Enable Page on addon plugin",
+            "default": false,
+            "type": "boolean"
+        },
+        "namespace": {
+            "description": "The namespace of the plugin class",
+            "pattern": "^[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*([\\\\/][a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)*$",
+            "type": "string"
+        }
+    },
+    "type": "object",
+    "$id": "https://hub.pentagonal.org/schema/whmcs/plugin.json",
+    "version": "1.0.0"
+}
