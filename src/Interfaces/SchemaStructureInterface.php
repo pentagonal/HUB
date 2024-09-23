@@ -28,8 +28,9 @@ interface SchemaStructureInterface extends ClassStructureContract
     /**
      * Create class structure contract
      *
-     * @return \Swaggest\JsonSchema\SchemaContract&ClassStructureContract
+     * @return \Swaggest\JsonSchema\SchemaContract
      * @noinspection PhpFullyQualifiedNameUsageInspection
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public static function schema();
 

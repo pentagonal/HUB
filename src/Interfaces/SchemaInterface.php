@@ -73,8 +73,8 @@ interface SchemaInterface
      * Create schema reference
      *
      * @param string $className
-     * @return \Swaggest\JsonSchema\SchemaContract&\Swaggest\JsonSchema\Structure\ClassStructureContract
+     * @return \Swaggest\JsonSchema\SchemaContract&ObjectItemContract
      * @noinspection PhpFullyQualifiedNameUsageInspection
      */
-    public static function createSchemaReference(string $className);
+    public static function createSchemaReference(string $className) : ObjectItemContract;
 }

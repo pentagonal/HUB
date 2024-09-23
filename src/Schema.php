@@ -9,6 +9,8 @@ use Pentagonal\Hub\Interfaces\SchemaInterface;
 use Pentagonal\Hub\Interfaces\SchemaStructureInterface;
 use RuntimeException;
 use Swaggest\JsonSchema\Context;
+use Swaggest\JsonSchema\SchemaContract;
+use Swaggest\JsonSchema\SchemaExporter;
 use Swaggest\JsonSchema\Structure\ClassStructureContract;
 use Swaggest\JsonSchema\Structure\ObjectItemContract;
 use Throwable;
@@ -16,6 +18,7 @@ use function class_exists;
 use function file_get_contents;
 use function file_put_contents;
 use function filemtime;
+use function get_class;
 use function is_dir;
 use function is_file;
 use function is_object;
@@ -56,8 +59,7 @@ final class Schema implements SchemaInterface
     public const SCHEMA_NAMESPACE = __NAMESPACE__ . '\\Schema\\';
 
     /**
-     * @var array<string, \Swaggest\JsonSchema\SchemaContract&ClassStructureContract>
-     * @noinspection PhpFullyQualifiedNameUsageInspection
+     * @var array<string, SchemaContract&ObjectItemContract>
      */
     private static array $refSchema = [];
 
@@ -118,7 +120,7 @@ final class Schema implements SchemaInterface
     /**
      * @inheritDoc
      */
-    public static function createSchemaReference(string $className)
+    public static function createSchemaReference(string $className) : ObjectItemContract
     {
         $lowerClassName = strtolower(trim($className, '\\'));
         if (isset(self::$refSchema[$lowerClassName])) {
@@ -129,7 +131,29 @@ final class Schema implements SchemaInterface
                 'Invalid Schema Structure Class'
             );
         }
-        self::$refSchema[$lowerClassName] = $className::schema();
+        $schema = $className::schema();
+        if ($schema instanceof SchemaExporter) {
+            $schema = $schema->exportSchema();
+        }
+        if (!$schema instanceof ObjectItemContract) {
+            throw new UnexpectedValueException(
+                sprintf(
+                    'Schema is not instance of %s, %s expected',
+                    ObjectItemContract::class,
+                    get_class($schema)
+                )
+            );
+        }
+        if (!$schema instanceof SchemaContract) {
+            throw new UnexpectedValueException(
+                sprintf(
+                    'Schema is not instance of %s, %s expected',
+                    SchemaContract::class,
+                    get_class($schema)
+                )
+            );
+        }
+        self::$refSchema[$lowerClassName] = $schema;
         return clone self::$refSchema[$lowerClassName];
     }
 
