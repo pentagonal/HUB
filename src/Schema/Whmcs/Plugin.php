@@ -32,6 +32,16 @@ class Plugin extends AbstractSchemaStructure
     public string $name;
 
     /**
+     * @var string $version the plugin version
+     */
+    public string $version = '';
+
+    /**
+     * @var ?string $menu_name the menu name
+     */
+    public ?string $menu_name = null;
+
+    /**
      * @var ?string The namespace of the plugin
      */
     public ?string $namespace = null;
@@ -91,7 +101,6 @@ class Plugin extends AbstractSchemaStructure
             ])
             ->addPropertyMapping('$schema', 'schema')
             ->addPropertyMapping(Schema::PROP_ID, 'id');
-
         $properties->schema = Schema::string()
             ->setDescription('The schema uri of the plugin')
             ->setFormat(Format::URI_REFERENCE);
@@ -100,6 +109,9 @@ class Plugin extends AbstractSchemaStructure
             ->setFormat(Format::URI_REFERENCE);
         $properties->name = Schema::string()
             ->setDescription('The name of the plugin');
+        $properties->menu_name = Schema::string()
+            ->setDescription('The menu name of the theme')
+            ->setDefault('');
         $properties->version = Schema::string()
             ->setDescription('The version of the plugin');
         $properties->url = Schema::string()
@@ -141,6 +153,14 @@ class Plugin extends AbstractSchemaStructure
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMenuName(): ?string
+    {
+        return $this->menu_name;
     }
 
     /**

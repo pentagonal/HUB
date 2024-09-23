@@ -60,12 +60,12 @@ class Theme extends AbstractSchemaStructure
     /**
      * @var ?string The date of created of the schema
      */
-    public ?string $date = null;
+    public string $date = '';
 
     /**
      * @var ?string The date of updated of the schema
      */
-    public ?string $updated = null;
+    public string $updated = '';
 
     /**
      * @var string The description of the schema
@@ -141,7 +141,7 @@ class Theme extends AbstractSchemaStructure
             ->addPropertyMapping(Schema::PROP_ID, 'id');
 
         $properties->schema = Schema::string()
-            //->setFormat(Format::URI_REFERENCE) // disabled to allow path
+            ->setFormat(Format::URI_REFERENCE)
             ->setDescription('The schema uri of the theme');
         $properties->id = Schema::string()
             ->setDescription('The id of the theme schema')
@@ -283,9 +283,9 @@ class Theme extends AbstractSchemaStructure
      *
      * @return ?string return null if not set
      */
-    public function getDate(): ?string
+    public function getDate(): string
     {
-        return $this->date??null;
+        return $this->date;
     }
 
     /**
@@ -293,9 +293,9 @@ class Theme extends AbstractSchemaStructure
      *
      * @return ?string return null if not set
      */
-    public function getUpdated(): ?string
+    public function getUpdated(): string
     {
-        return $this->updated??null;
+        return $this->updated;
     }
 
     /**
