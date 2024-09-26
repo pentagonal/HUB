@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Pentagonal\Hub\Interfaces\SchemaInterface;
 use Pentagonal\Hub\Schema;
 use Swaggest\JsonSchema\Context;
+use Swaggest\JsonSchema\JsonSchema;
 use Swaggest\JsonSchema\SchemaExporter;
 
 if (php_sapi_name() !== 'cli') {
@@ -91,11 +92,13 @@ foreach ($iterator as $file) {
         echo "\033[31mError: Cannot create directory for {$target}\033[0m\n";
         exit(1);
     }
-    if (!$jsonSchema instanceof SchemaExporter) {
+    if ($jsonSchema instanceof SchemaExporter) {
+        $jsonSchema = $jsonSchema->exportSchema();
+    }
+    if (!$jsonSchema instanceof JsonSchema) {
         echo "\033[31mError: {$className} is not a valid schema\033[0m\n";
         exit(1);
     }
-    $jsonSchema = $jsonSchema->exportSchema();
     file_put_contents($targetDir . '/' . $target, json_encode($jsonSchema, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     $classNameListUri[$target] = [
         'title' => $jsonSchema->title ?? $target,
