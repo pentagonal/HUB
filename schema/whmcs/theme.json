@@ -5,7 +5,6 @@
     "required": [
         "name"
     ],
-    "additionalProperties": false,
     "definitions": {
         "title": {
             "description": "The title of the definition",
